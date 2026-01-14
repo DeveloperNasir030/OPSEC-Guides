@@ -1,0 +1,71 @@
+Phase 1: Die Grundlagen - Dein digitales Fundament
+Bevor wir tiefer graben, müssen wir die Basis schaffen. Überspringe diese Phase nicht, sie ist entscheidend.
+
+Lösche Windows und installiere es neu (Clean Slate Principle):
+
+Warum? Dein aktuelles System ist voller Telemetrie, alter Daten und potenzieller Schwachstellen. Ein frischer Start ist die einzige 100%ige Säuberung.
+Wie? Erstelle einen bootfähigen Windows-Installer-Stick mit dem Media Creation Tool von Microsoft. Wähle während der Installation "Benutzerdefinierte Installation" und formatiere alle Partitionen deiner Festplatte. Keine Rettung von alten Dateien.
+Kaufe und nutze einen "Burner-Laptop":
+
+Warum? Dein Haupt-PC ist mit deinem echten Namen, deinen Käufen und deiner Hardware verknüpft. Ein gebrauchter, bar bezahlter Laptop von einer privaten Person auf Craigslist/eBay ist anonym. Er hat keine Seriennummern, die mit dir in Verbindung stehen.
+Geheimer Tipp: Nutze diesen Laptop nur für deine anonymen Aktivitäten. Mische niemals private (E-Mail, Banking) und anonyme Nutzung.
+Hardware-Anonymisierung:
+
+MAC-Adresse: Jede Netzwerkkarte hat eine einzigartige MAC-Adresse. Sie ist wie ein Fingerabdruck.
+Geheimer Tipp: Ändere deine MAC-Adresse softwareseitig bei jeder Verbindung. Nutze dafür Tools wie Technitium MAC Address Changer. Wähle eine zufällige, vom Hersteller zugewiesene Adresse (OUI), um nicht aufzufallen.
+Phase 2: Windows in eine Festung verwandeln (Core Hardening)
+Jetzt machen wir das frische Windows-System zu einer Blackbox.
+
+Deaktiviere die Windows-Telemetrie (Total):
+
+Standardmethode (unzureichend): Gehe zu Einstellungen > Datenschutz > Diagnose & Feedback und setze alles auf "Aus".
+Profi-Methode (notwendig): Nutze das Open-Source-Tool W10Privacy oder Blackbird. Diese Skripte durchsuchen die Registry und deaktivieren Dutzende versteckter Telemetrie-Dienste, die Microsoft nicht in den Einstellungen anzeigt. Setze alles auf die höchste Sicherheitsstufe.
+Geheimer Tipp: Blockiere Telemetrie-Server auf Router-Ebene. Füge folgende Domains zur Blacklist deines Routers oder deiner hosts-Datei hinzu: # Windows Telemetry 0.0.0.0 vortex-win.data.microsoft.com 0.0.0.0 settings-win.data.microsoft.com 0.0.0.0 telemetry.appex.bing.net 0.0.0.0 a-0001.a-msedge.net 0.0.0.0 a-0002.a-msedge.net 0.0.0.0 a-0003.a-msedge.net 0.0.0.0 a-0004.a-msedge.net 0.0.0.0 a-0005.a-msedge.net 0.0.0.0 statsfe2.ws.microsoft.com 0.0.0.0 compatexchange.cloudapp.net 0.0.0.0 slscr.update.microsoft.com 0.0.0.0 fe2.update.microsoft.com
+Entferne Windows-Apps (App-Bereinigung):
+
+Warum? Apps wie "Cortana", "News", "Xbox" sind Datensammler.
+Wie? Nutze PowerShell als Administrator. Führe diesen Befehl aus, um eine Liste aller installierter Apps zu bekommen:
+powershell
+Get-AppxPackage -AllUsers | Select Name, PackageFullName
+Entferne dann die unnötigen Apps. Beispiel für die Xbox-App:
+powershell
+Get-AppxPackage -AllUsers Microsoft.XboxApp | Remove-AppxPackage
+Geheimer Tipp: Nutze das Skript Debloat Windows von GitHub (Sycnex/Windows-Debloater). Es automatisiert den Prozess und entfernt sogar Systemkomponenten wie "OneDrive" vollständig.
+Deaktiviere unnötige Dienste:
+
+Öffne services.msc. Setze die folgenden Dienste auf "Deaktiviert":
+Diagnostic Policy Service
+Diagnostic Service Host
+Diagnostic System Host
+Windows Error Reporting Service
+Remote Registry (massives Sicherheitsrisiko!)
+Print Spooler (wenn du nicht druckst)
+Windows Search (Cortana-Indexierung, ein Datensammler)
+Phase 3: Netzwerk-Traffic unsichtbar machen (Der Tunnel)
+Dein Verkehr ist dein größtes Loch. Wir stopfen es.
+
+VPN ist nicht genug:
+
+Warum? Ein VPN verschleiert deine IP vor Webseiten, aber nicht vor deinem VPN-Anbieter. Sie sehen alles.
+Geheimer Tipp: Nutze einen "No-Logs" VPN-Anbieter, der mit Kryptowährung (z.B. Monero) bezahlt wird und außerhalb der 14/9 Eyes Länder ansässig ist. Beispiele (ohne Garantie): Mullvad, IVPN, ProtonVPN.
+Die Kette schmieden: VPN + Tor:
+
+Das Setup: Verbinde dich immer zuerst mit deinem VPN und öffne dann den Tor Browser.
+Warum? Der VPN-Anbieter sieht nur, dass du dich mit Tor verbindest. Der Tor-Exitknoten sieht nur den Verkehr des VPN-Anbieters, nicht deine echte IP. Das ist der Goldstandard.
+WICHTIG: Nutze NIEMALS den normalen Browser (Chrome, Firefox, Edge) im VPN-Modus für sensible Dinge. Nutze ausschließlich den Tor Browser, der Anti-Fingerprinting-Techniken integriert hat.
+DNS ist dein Feind:
+
+Warum? Selbst im VPN kann ein DNS-Leak deine echten Anfragen verraten.
+Geheimer Tipp: Ändere deine DNS-Server manuell auf deinem PC und in deinem Router auf vertrauenswürdige, private DNS-Resolver:
+Cloudflare: 1.1.1.1 und 1.0.0.1
+Quad9: 9.9.9.9 und 149.112.112.112 (blockiert bekannte bösartige Domains)
+NextDNS: Bietet personalisierte Filter und Tracker-Blockaden.
+Phase 4: Browser und Anwendungen zur Stille bringen
+Tor Browser-Konfiguration:
+
+Sicherheitsstufe: Setze die Sicherheit im Tor Browser auf die höchste Stufe (Safest). Das deaktiviert JavaScript auf vielen Seiten, was für maximale Sicherheit notwendig ist.
+Geheimer Tipp: Nutze die about:config Seite und setze dom.webaudio.enabled auf false. WebAudio kann zur Canvas-Fingerprinting-Generierung missbraucht werden.
+Isolierte Anwendungsnutzung (Sandboxing):
+
+Warum? Eine Anwendung sollte niemals auf dein System zugreifen können, außer auf das, was sie absolut braucht.
+Geheimer Tipp: Nutze Sandboxie Plus. Starte deinen Browser, deinen E-Mail-Client oder sogar deinen PDF-Reader immer in einer Sandbox. Wenn die Anwendung kompromittiert wird, kann der Schaden nicht auf dein Haupt-System übergreifen. Konfiguriere die Sandbox so, dass sie keinen Internetzugang hat, es sei denn, es ist absolut notwendig.
