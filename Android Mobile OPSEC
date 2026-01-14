@@ -1,0 +1,23 @@
+1. Lock your SIM card with a PIN — prevents SIM cloning or silent swaps.
+2. Disable “Install unknown apps” globally — whitelist only one trusted file manager when needed.
+3. Check for hidden device admins → Settings > Security > Device admin apps.
+4. Turn off Wi-Fi and Bluetooth scanning — they leak your location even when off.
+5. Change default DNS to 1.1.1.1 or 9.9.9.9, or enable DNS-over-TLS.
+6. Use Samsung Secure Folder or Shelter app to isolate work / risky apps.
+7. Enable mock location in Developer Options to hide real GPS data when needed.
+8. Use SnoopSnitch to detect fake cell towers (IMSI catchers).
+9. Disable Bluetooth scanning and randomize MAC address per network.
+10. Use an offline authenticator like Aegis instead of Google Authenticator.
+11. Enable auto permission revoke for unused apps.
+12. Disable Google telemetry: Web & App Activity, Location History, Ad Personalization.
+13. Use a firewall like RethinkDNS or NetGuard to monitor app connections.
+14. Restrict background data for apps that don’t need it.
+15. Inspect system services with “adb shell dumpsys package” or App Manager.
+16. Use Airplane mode + Bluetooth off before plugging into unknown USB ports.
+17. Replace Samsung/Google keyboard with OpenBoard for zero telemetry.
+18. Encrypt local photos/files before uploading to cloud storage (Cryptomator or EDS Lite).
+19. Keep lockscreen timeout short (15 sec) and disable “lock instantly with power button.”
+20. Flash the latest firmware manually via Odin if Samsung OTA updates are delayed.
+21. Use “adb logcat” while idle to watch for suspicious background network activity.
+22. Disable Find My Mobile if your threat model includes Samsung/Google tracking.
+23. Use a clean backup device (same model) ready for instant switch if compromise suspected.
